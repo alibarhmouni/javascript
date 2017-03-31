@@ -17,8 +17,7 @@
 		// var secondes = 60;
 		var PI2=Math.PI*2;
 		var rad = PI2/360;
-		var startArc = -(PI2/4);
-		var endArc = startArc;
+		//var endArc = startArc;
 		var sec = 60;
 		var minutes = 60;
 		var incrementUnit = PI2/sec;
@@ -28,50 +27,56 @@
 		var tabCouleur = ['red','blue','green','black'];
 		var tabObj = [];
 
-		Circle = function(posX,posY,size,color,incr){
+		Circle = function(posX,posY,size,color, maxSteps){
 			
+			this.startArc = -(PI2/4);
+			this.endArc = this.startArc;
 			this.size = size;
 			this.color = color;
 			this.posX = posX;
 			this.posY = posY;
-			this.increment = incr;
+			this.maxSteps = maxSteps;
 
 			
 		}
 
-		Circle.prototype.drawCircle = function() {
+		Circle.prototype.drawCircle = function(currenTime){
+
+			this.endArc = this.startArc + (PI2 / this.maxSteps) * currenTime;
 			
+			ctx.beginPath();
+			ctx.arc(this.posX, this.posY, this.size, this.startArc,this.endArc, false);
 			ctx.strokeStyle = this.color;
 			ctx.lineWidth="10";
-			ctx.beginPath();
-			ctx.arc(this.posX, this.posY, this.size, startArc, endArc, false);
 			ctx.stroke();
-			dessin();
-			endArc = endArc + this.increment;
-			console.log(this.increment);
 			
 		};
 
 
-		for (var i = 0; i <4 ; i++) {
 			
-			var cercle = new Circle(posX,posY,circleSize-(i*50),tabCouleur[i],incrementUnit);
-			tabObj.push(cercle);
+		var cercleSeconde = new Circle(posX,posY,circleSize-(1*50),tabCouleur[0], 60);
+		var cercleMinute = new Circle(posX,posY,circleSize-(2*50),tabCouleur[0], 60);
+		var cercleHour = new Circle(posX,posY,circleSize-(3*50),tabCouleur[0], 24);
+	
+		
+
+		var dessin = function(){
+			var date = new Date();
+
+			ctx.clearRect(0,0, 800, 800 );
+			cercleSeconde.drawCircle(date.getSeconds());
+			cercleMinute.drawCircle(date.getMinutes());
+			cercleHour.drawCircle(date.getHours());
 			
+
 		}
 	
-		var dessin = function(){
-			setTimeout(function(){
 
-				tabObj.forEach(function(obj){
-					obj.drawCircle();
-
-					
-				});
-
-			},1000);
-		}
+		setInterval(dessin,1000);
 		dessin();
+
+
+
 
 		
 
