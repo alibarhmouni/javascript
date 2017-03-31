@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>ligne</title>
+</head>
+<body>
+	<canvas id='canvas' width="600" height="600"></canvas>
+	<script>
+		var canvas = document.getElementById('canvas');
+		canvas.style.border="1px solid blue";
+		var ctx = canvas.getContext('2d');
+		var size = 20;
+		tabColor=["green","yellow","grey","pink","brown","blue"];
+		let indiceCouleur = 0;
+
+		LigneObj = function(x,y,size,color){
+			this.x = x;
+			this.y = y;
+			this.size = size;
+			this.color = color;
+
+			
+
+		}
+
+
+		LigneObj.prototype.dessiner = function(){
+			ctx.fillStyle = this.color;
+			ctx.beginPath();
+			ctx.arc(this.x,this.y,this.size,0,Math.PI*2,true);
+			ctx.closePath();
+			ctx.fill();
+
+
+		}
+		var newObj = function(){
+			
+			var cercle = new LigneObj(300,300,size,tabColor[indiceCouleur]);
+			if(size <200){
+				size+=1;
+			}
+			else if(size >= 200){
+				size = 0;
+			}
+			console.log(size);
+			cercle.dessiner();
+		}
+		
+		
+
+
+		setInterval(function(){
+
+			newObj();
+			indiceCouleur += 1;
+
+			if(indiceCouleur > 5){
+				indiceCouleur =0;
+			}
+
+
+		},10);
+
+
+		
+
+
+	</script>
+</body>
+</html>

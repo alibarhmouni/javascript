@@ -41,8 +41,7 @@
 		
 
 		var square2 = new Carre(200,200,150,150,tabCouleurs[1]);
-		// square2.vx = -1;
-		// square2.vy = -1;
+	
 
 
 		var squareCreation = function(x,y){
@@ -52,10 +51,15 @@
 			console.log(square1);
 		}
 
-		canvas.addEventListener("mouseover",function(event){
+		canvas.addEventListener("mousemove",function(event){
 
 			squareCreation(event.clientX,event.clientY);
+			console.log("X: "+event.clientX);
+			console.log("Y: "+event.clientY);
 		});
+
+		
+			console.dir(window);
 
 		
 		
