@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		.maDiv{
+			border:1px solid black;
+			width:100px;
+			height:100px;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="maDiv" >
+	</div>
+	<script>
+		
+	let onDomReady = function (){
+		console.dir(window);
+	let maDiv = document.getElementsByClassName('maDiv');
+		// let destination = function(event){
+
+		// 	console.log(event.clientX, event.clientY);
+			
+		// }
+		let bouger = function(eventBouger){
+				console.log(eventBouger.clientX, eventBouger.clientY);
+			}
+
+		let prendre = function(event){
+			console.log(event.clientX, event.clientY);
+			event.target.addEventListener("mouseover",bouger);
+		}
+
+		
+
+		// maDiv[0].addEventListener("mouseup",destination);
+		maDiv[0].addEventListener("mousedown",prendre);
+		
+
+
+	
+	
+}
+
+
+window.addEventListener("DOMContentLoaded",onDomReady);
+
+	</script>
+
+
+
+</body>
+</html>

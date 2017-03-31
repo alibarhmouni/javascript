@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<canvas id="canvas">kdsjklhs</canvas>
+	<script>
+
+		var canvas = document.getElementById('canvas');
+		ctx = canvas.getContext('2d');
+		canvas.setAttribute("width",'800px');
+		canvas.setAttribute("height",'800px');
+		canvas.style.border="1px solid black";
+		// var secondes = 60;
+		var PI2=Math.PI*2;
+		var rad = PI2/360;
+		var startArc = -(PI2/4);
+		var endArc = startArc;
+		var sec = 60;
+		var minutes = 60;
+		var incrementUnit = PI2/sec;
+		var posX = 400;
+		var posY=400;
+		var circleSize = 200;
+		var tabCouleur = ['red','blue','green','black'];
+		var tabObj = [];
+
+		Circle = function(posX,posY,size,color,incr){
+			
+			this.size = size;
+			this.color = color;
+			this.posX = posX;
+			this.posY = posY;
+			this.increment = incr;
+
+			
+		}
+
+		Circle.prototype.drawCircle = function() {
+			
+			ctx.strokeStyle = this.color;
+			ctx.lineWidth="10";
+			ctx.beginPath();
+			ctx.arc(this.posX, this.posY, this.size, startArc, endArc, false);
+			ctx.stroke();
+			dessin();
+			endArc = endArc + this.increment;
+			console.log(this.increment);
+			
+		};
+
+
+		for (var i = 0; i <4 ; i++) {
+			
+			var cercle = new Circle(posX,posY,circleSize-(i*50),tabCouleur[i],incrementUnit);
+			tabObj.push(cercle);
+			
+		}
+	
+		var dessin = function(){
+			setTimeout(function(){
+
+				tabObj.forEach(function(obj){
+					obj.drawCircle();
+
+					
+				});
+
+			},1000);
+		}
+		dessin();
+
+		
+
+
+
+	</script>
+</body>
+</html>

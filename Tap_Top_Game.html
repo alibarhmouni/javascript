@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>DOM Dynamics</title>
+</head>
+	<style>	
+		#game{
+			width: 300px;
+			height: 400px;
+			border: 1px solid black;
+			background: grey; 
+		}
+		.square {
+			width: 80px;
+			height: 80px;
+			margin: 10px;
+			background-color: black;
+			float: left;
+			transition: 0.2s all; 
+		}
+		.commands {
+			text-align: center;
+	    padding: 20px 0;
+	    float: left;
+	    width: 100%;
+		}
+		.hide { opacity: 0; }
+		.green{ background-color: green;  }
+		.yellow { background-color: yellow; }
+		.red { background-color: red;   }
+	</style>
+
+		<script>
+			function onDomReady (){
+
+					let squares = document.getElementsByClassName("square");
+					let btnStartGame = document.getElementById("start");
+					let squaresStack = [];
+					let score =Number(0);
+					
+
+					let Square = function(element, delay, random){
+							this.element = element;
+							this.id = element.id;
+							this.delay = delay;
+							this.random = random;
+							var __self =this;
+							// add event to the html element
+							this.element.addEventListener("click", function(){
+								__self.tap();
+								__self.disapear();
+							}, false);
+					}
+					Square.prototype.appear = function(){
+						var _self = this;
+						// time before it appears
+						setTimeout(function(){
+								_self.element.classList.remove("hide");
+								console.log(_self.delay);
+
+								if(_self.random <= (_self.random/ 3)){
+
+									_self.element.classList.add("green");
+								}
+
+								else if(_self.random > (_self.random/ 3)*2){
+									_self.element.classList.remove("green");
+									_self.element.classList.add("red");
+								}
+
+								else{
+									_self.element.classList.remove("red");
+									_self.element.classList.add("yellow");
+								}
+						}, this.delay);
+
+						
+						// time after it should be gone
+						setTimeout(function(){
+								_self.disapear();
+						}, this.delay + this.random);
+					}
+					Square.prototype.progress = function(){
+						// console.log('progress');
+					}
+					Square.prototype.disapear = function(){
+						console.log('disapear');
+						this.element.classList.add("hide");
+
+					}
+					// var callbackFunction = function(){
+					// 	newSquare.tap();
+					// }
+
+					
+					Square.prototype.tap = function (){
+							// console.log(this.id);
+							if(this.appear()){
+								score++;
+							}
+							
+							// console.log(score);
+
+
+					}
+
+					let launchGame = function(){
+						// loop over the dom elements
+						for(let i=0; i < squares.length; i++){
+							// prepare timing values
+							let randomTime = Math.round(Math.random() * 3000);
+							let delayTime = i * 300;
+							// init square object
+							let newSquare = new Square(squares[i], delayTime, randomTime);
+							newSquare.disapear();
+							squaresStack.push(newSquare);
+						}
+						// wait before we lauch the game
+						setTimeout(showSquare, 1000);
+					}
+
+					let showSquare = function(){
+						let randomInt = Math.floor(Math.random()*squares.length);
+						let selectedSquare = squaresStack[randomInt];
+
+						selectedSquare.appear();
+
+						setTimeout(showSquare, selectedSquare.random + selectedSquare.delay);
+					}
+
+					btnStartGame.addEventListener("click", launchGame);
+			}
+
+			window.addEventListener("DOMContentLoaded", onDomReady);
+			//window.removeEventListener("DOMContentLoaded", onDomReady);
+
+
+		
+
+
+	</script>
+
+<body>	
+		<div id="game">	
+				<div id="square-0" class="square"></div>
+				<div id="square-1" class="square"></div>
+				<div id="square-2" class="square"></div>
+
+				<div id="square-3" class="square"></div>
+				<div id="square-4" class="square"></div>
+				<div id="square-5" class="square"></div>
+
+				<div id="square-6" class="square"></div>
+				<div id="square-7" class="square"></div>
+				<div id="square-8" class="square"></div>
+				<div class="commands">	
+						<button id="start">Start game</button>
+						<p id="message"></p>
+				</div>
+		</div>
+
+
+
+
+
+</body>
+</html>

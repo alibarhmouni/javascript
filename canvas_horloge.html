@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<canvas id="canvas">kdsjklhs</canvas>
+	<script>
+
+		var canvas = document.getElementById('canvas');
+		ctx = canvas.getContext('2d');
+		canvas.setAttribute("width",'800px');
+		canvas.setAttribute("height",'800px');
+		canvas.style.border="1px solid black";
+		// var secondes = 60;
+		var PI2=Math.PI*2;
+		var rad = PI2/360;
+		var startArc = -(PI2/4);
+		var endArc = startArc;
+		var sec = 60;
+		var minutes = 60;
+		var incrementUnit = PI2/sec;
+	
+
+		var drawCircle = function(x,y,size,color,incr){
+			ctx.fillStyle = color;
+			ctx.lineWidth="10";
+			ctx.beginPath();
+			ctx.arc(x, y, size, startArc, endArc, false);
+			ctx.stroke();
+			endArc = endArc+incr;
+
+			
+			
+			
+			
+			setTimeout(function(){
+				
+				drawCircle(x,y,200,color,incr);
+				
+
+			},100);
+
+		
+
+
+		}
+			
+
+		drawCircle(400,400,200,"blue",incrementUnit);
+		
+
+
+	</script>
+</body>
+</html>
