@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<canvas id="canvas" height="400" width="400"></canvas>
+	<script>
+		var canvas = document.getElementById('canvas');
+		canvas.style.border="1px solid black";
+		var ctx = canvas.getContext('2d');
+		var tabCouleurs = ["red","yellow","blue"];
+
+
+		Carre = function(x,y,width,height,color){
+			this.width = width;
+			this.height = height;
+			this.color = color;
+			this.x = x;
+			this.y = y;
+			this.vx = 1;
+			this.vy =1;
+
+
+		}
+
+		Carre.prototype.dessinCarre =  function(x,y){
+
+			ctx.fillStyle = this.color;
+			ctx.fillRect(x, y, this.width, this.height);
+			ctx.stroke();
+			// this.x +=this.vx;
+			// this.y +=this.vy; 
+		}
+
+
+
+
+		var square1 = new Carre(10,10,100,100,tabCouleurs[0]);
+		
+
+		var square2 = new Carre(200,200,150,150,tabCouleurs[1]);
+		// square2.vx = -1;
+		// square2.vy = -1;
+
+
+		var squareCreation = function(x,y){
+			ctx.clearRect(0,0,400,400);
+			square1.dessinCarre(x,y);
+			square2.dessinCarre(x,y);
+			console.log(square1);
+		}
+
+		canvas.addEventListener("mouseover",function(event){
+
+			squareCreation(event.clientX,event.clientY);
+		});
+
+		
+		
+		// setInterval(squareCreation,1000/60);
+
+	</script>
+</body>
+</html>
