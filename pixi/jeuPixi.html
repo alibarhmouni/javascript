@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pixi game</title>
+</head>
+<body>
+	<script type="text/javascript" src="minPixi/pixi.min.js"></script>
+	<script>
+		var stage;
+		var vaisseau;
+		var keyup;
+		var keydown;
+		var left;
+		var right;
+
+		var Game = Game || {};
+
+		Game.render = function(){
+			renderer = new PIXI.CanvasRenderer(300, 300);
+			document.body.appendChild(renderer.view);
+			stage = new PIXI.Container();
+			renderer.render(stage);
+			renderer.view.style.position = "absolute";
+			renderer.view.style.display = "block";
+			renderer.autoResize = true;
+			renderer.resize(window.innerWidth, window.innerHeight);
+			Game.load();
+		}
+
+		Game.load = function(){
+			PIXI.loader
+  			.add("images/ship2.png")
+ 			.load(setup);
+
+			function setup() {
+		  		vaisseau = new PIXI.Sprite(
+		  		PIXI.loader.resources["images/ship2.png"].texture);
+		  		vaisseau.x = 200;
+		  		vaisseau.y = 300;
+		  		vaisseau.scale.x = 0.5;
+				vaisseau.scale.y = 0.5;
+				// vaisseau.rotation = 0.5;
+				vaisseau.anchor.x = 0.5;
+				vaisseau.anchor.y = 0.5;
+		  		stage.addChild(vaisseau);
+		  		renderer.render(stage);
+			}
+			Game.move();
+		}
+
+
+		Game.move = function(){
+
+			var mouvement = function(key){
+				console.log(key);
+				switch(key){
+					case 'ArrowUp':
+						keyup = true;
+						// vaisseau.y -= 5;
+					break;
+					case 'ArrowDown':
+						keydown = true;
+				
+						// vaisseau.y += 5;
+					break;
+					case 'ArrowRight':
+						left = true;
+				
+						// vaisseau.x += 5;
+					break;
+					case 'ArrowLeft':
+						right = true;
+						// vaisseau.x -= 5;
+					break;
+
+				}
+				if(keyup == true){
+						vaisseau.y -= 5;
+					}
+				if(keydown == true){
+					vaisseau.y += 5;
+				}
+				if(left == true){
+					vaisseau.x += 5;
+				}
+				if(right == true){
+					vaisseau.x -= 5;
+				}
+
+				renderer.render(stage);
+			}
+			
+
+			window.addEventListener("keydown",function(event){
+				mouvement(event.key);
+
+			})
+
+			window.addEventListener("keyup",function(event){
+				// console.log(event.key);
+				keyup = false;
+				keydown = false;
+				left = false;
+				right = false;
+				
+
+			})
+
+
+		}
+		
+
+		Game.render();
+
+
+		
+		
+		
+	</script>
+</body>
+</html>

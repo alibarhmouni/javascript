@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<canvas id='canvas' height="500" width='500'></canvas>
+	<script>
+		var canvas = document.getElementById('canvas');
+		var context = canvas.getContext('2d');
+		canvas.style.border="1px solid black";
+		var PI2 = (Math.PI*2);
+		var startArc = -(Math.PI/2);
+		var endArc = startArc;
+
+		CercleObj = function(posX,posY,size,color,etapes){
+			this.posX = posX;
+			this.posY = posY;
+			this.size = size;
+			this.color = color;
+			this.etapes = etapes;
+		}
+
+
+		CercleObj.prototype.dessinCercle = function(temps){
+			endArc = startArc + (PI2/this.etapes)*temps;
+			console.log(temps);
+			context.strokeStyle = this.color;
+			context.lineWidth="10";
+			context.beginPath();
+			context.arc(this.posX,this.posY,this.size,startArc,endArc,false);
+			context.stroke();
+		}
+
+		var cercleSec = new CercleObj(250,250,100,"blue",60);
+		var cercleMin = new CercleObj(250,250,120,"green",60);
+		var cercleHeures = new CercleObj(250,250,140,"red",24);
+		var cercleMois = new CercleObj(250,250,160,"yellow",12);
+
+		var dessin = function(){
+			var date = new Date();
+			context.clearRect(0,0,500,500);
+			cercleSec.dessinCercle(date.getSeconds());
+			cercleMin.dessinCercle(date.getMinutes());
+			cercleHeures.dessinCercle(date.getHours());
+			cercleMois.dessinCercle(date.getMonth());
+		}
+
+		setInterval(dessin,1000);
+
+		// setInterval(function(){
+		// 	var date = new Date();
+		// 	context.clearRect(0,0,500,500);
+		// 	cercleSec.dessinCercle(date.getSeconds());
+		// 	cercleMin.dessinCercle(date.getMinutes());
+		// 	cercleHeures.dessinCercle(date.getHours());
+		// 	cercleMois.dessinCercle(date.getMonth());
+		// },1000);
+
+
+
+
+	</script>
+</body>
+</html>
