@@ -9,8 +9,8 @@
 	<script>
 		var stage;
 		var vaisseau;
-		var keyup;
-		var keydown;
+		var up;
+		var down;
 		var left;
 		var right;
 
@@ -53,54 +53,63 @@
 		Game.move = function(){
 
 			var mouvement = function(key){
+				
 				console.log(key);
 				switch(key){
 					case 'ArrowUp':
-						keyup = true;
-						// vaisseau.y -= 5;
+						up = true;
 					break;
 					case 'ArrowDown':
-						keydown = true;
+						down = true;
 				
-						// vaisseau.y += 5;
 					break;
 					case 'ArrowRight':
 						left = true;
 				
-						// vaisseau.x += 5;
 					break;
 					case 'ArrowLeft':
 						right = true;
-						// vaisseau.x -= 5;
 					break;
-
+					
 				}
-				if(keyup == true){
-						vaisseau.y -= 5;
-					}
-				if(keydown == true){
-					vaisseau.y += 5;
+			// 	requestAnimationFrame(state);
+			// }
+
+			// var state = function(){
+			// 	console.log('test');
+
+				if(up == true){
+					vaisseau.y -= 3;
+				}
+				if(down == true){
+					vaisseau.y += 3;
 				}
 				if(left == true){
-					vaisseau.x += 5;
+					vaisseau.x += 3;
 				}
 				if(right == true){
-					vaisseau.x -= 5;
+					vaisseau.x -= 3;
 				}
-
 				renderer.render(stage);
+
+			// }
+				
+				
+				
 			}
+			
 			
 
 			window.addEventListener("keydown",function(event){
+
 				mouvement(event.key);
 
 			})
 
 			window.addEventListener("keyup",function(event){
 				// console.log(event.key);
-				keyup = false;
-				keydown = false;
+				up = false;
+				down = false;
 				left = false;
 				right = false;
 				
